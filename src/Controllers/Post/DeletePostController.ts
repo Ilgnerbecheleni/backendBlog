@@ -13,6 +13,8 @@ class DeletePostController {
 
         } catch (error) {
             response.status(400).json({ message: "post not found", error:error.message });
+
+            
         }
 
 
