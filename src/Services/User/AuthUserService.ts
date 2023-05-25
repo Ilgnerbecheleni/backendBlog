@@ -25,8 +25,10 @@ class AuthUserService {
         if (!verify) {
             throw new Error("user or password incorrect")
         }
-
+        console.log(process.env.JWT_SECRET);
         const secret = process.env.JWT_SECRET as string;
+
+
 
         //gerar token
         const token = sign({ id: user.id, name: user.email, role: user.roles }, secret,
