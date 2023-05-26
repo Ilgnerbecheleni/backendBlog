@@ -10,37 +10,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 enum Role {
   USER
   ADMIN
 }
 
 model Usuario {
-  id          String        @id @default(uuid())
-  name        String
-  email       String        @unique
-  password    String
-  avatar      String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  roles       Role[]        @default([USER])
-  posts       Post[]
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  avatar    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  roles     Role[]   @default([USER])
+  posts     Post[]
+  likes     Likes[]
 
   @@map("usuarios")
 }
 
-model Post{
-  id          String        @id @default(uuid())
-  title       String
-  content     String
-  image       String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  view        Int
-  like        Int 
-  author      Usuario       @relation(fields: [authorId], references: [id])
-  authorId    String
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  view      Int?     @default(0)
+  countlike Int?     @default(0)
+  author    Usuario  @relation(fields: [authorId], references: [id])
+  authorId  String
+
+  likes Likes[]
 
   @@map("posts")
+}
+
+model Likes {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  user      Usuario  @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@map("likes")
 }

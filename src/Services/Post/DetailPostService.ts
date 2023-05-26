@@ -9,6 +9,17 @@ class DetailPostService {
         });
 
         if(post){
+            const view = post.view+1;
+
+            const postUpdated = await prismaClient.post.update({
+                where: {id:id},data:{title:post.title,
+                    content:post.content,
+                    image:post.image,
+                    like:post.like,
+                    view:view}
+            })
+
+
             const user = await prismaClient.usuario.findFirst({
                 where: {
                     id: post.authorId
@@ -17,7 +28,7 @@ class DetailPostService {
                     }
             })
 
-            return {post,autor:user.name}
+            return {postUpdated,autor:user.name}
         }
   
     }

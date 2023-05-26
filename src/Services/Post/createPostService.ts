@@ -20,7 +20,9 @@ class CreatePostService {
         title: title,
         content: content,
         authorId: authorId,
-        image: image
+        image: image,
+        view:0,
+        like:0
       }
 
     })
