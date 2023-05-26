@@ -27,7 +27,24 @@ class DetailPostService {
                     }
             })
 
-            return {postUpdated,autor:user.name}
+            const countLikes = await  prismaClient.likes.count({
+                where:{
+                    postId:post.id
+                }
+            })
+
+            postUpdated.countlike = countLikes;
+
+            const countComents = await prismaClient.likes.count(
+                {
+                    where:{
+                        postId:post.id
+                    }
+                }
+            )
+            postUpdated.countcoment = countComents;
+console.log(countComents)
+            return {post:postUpdated,autor:user.name}
         }
   
     }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import likePostService from "../../Services/Post/likePostService";
+import likePostService from "../../../Services/Post/like/likePostService";
 
 class likePostContrtoller {
     async handle(request: Request, response: Response) {

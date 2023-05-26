@@ -13,7 +13,8 @@ import DetailPostController from "./Controllers/Post/DetailPostController";
 import GetAllPostsController from "./Controllers/Post/GetAllPostsController";
 import DeletePostController from "./Controllers/Post/DeletePostController";
 import UpdatepostController from "./Controllers/Post/UpdatepostController";
-import likePostContrtoller from "./Controllers/Post/likePostcontroller";
+import likePostContrtoller from "./Controllers/Post/like/likePostcontroller";
+import CreateCommentController from "./Controllers/Post/comment/CreateCommentController";
 const router = Router()
 
 const upload = multer(uploadConfig.upload("./tmp"));
@@ -33,7 +34,8 @@ router.delete('/users/:id', isAutenticated,isAdmin,isyou, new DeleteUserControll
 
 //rotas posts
 router.post('/posts', upload.single('file'),isAutenticated,isAdmin, new CreatePostcontroller().handle)
-router.post('/posts/like/:postId',isAutenticated, new likePostContrtoller().handle )
+router.post('/posts/:postId/like',isAutenticated, new likePostContrtoller().handle )
+router.post('/posts/:postId/comment',isAutenticated, new CreateCommentController().handle )
 router.get('/posts/:id',isAutenticated,new DetailPostController().handle)
 router.get('/posts',new GetAllPostsController().handle)
 router.put('/posts/:id', upload.single('file'),isAutenticated,isAdmin, new UpdatepostController().handle)

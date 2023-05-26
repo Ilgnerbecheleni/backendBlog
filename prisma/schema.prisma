@@ -16,33 +16,35 @@ enum Role {
 }
 
 model Usuario {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String     @unique
   password  String
   avatar    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  roles     Role[]   @default([USER])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  roles     Role[]     @default([USER])
   posts     Post[]
   likes     Likes[]
+  coments   Comments[]
 
   @@map("usuarios")
 }
 
 model Post {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   title     String
   content   String
   image     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  view      Int?     @default(0)
-  countlike Int?     @default(0)
-  author    Usuario  @relation(fields: [authorId], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  view      Int?       @default(0)
+  countlike Int?       @default(0)
+  countcoment Int?       @default(0)
+  author    Usuario    @relation(fields: [authorId], references: [id])
   authorId  String
-
-  likes Likes[]
+  coments   Comments[]
+  likes     Likes[]
 
   @@map("posts")
 }
@@ -57,4 +59,16 @@ model Likes {
   userId    String
 
   @@map("likes")
+}
+
+model Comments {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  user      Usuario  @relation(fields: [userId], references: [id])
+  userId    String
+   @@map("comentarios")
 }
