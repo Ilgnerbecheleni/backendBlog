@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "posts" ADD COLUMN     "like" INTEGER DEFAULT 0,
-ADD COLUMN     "view" INTEGER DEFAULT 0;

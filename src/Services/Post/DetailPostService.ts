@@ -15,7 +15,6 @@ class DetailPostService {
                 where: {id:id},data:{title:post.title,
                     content:post.content,
                     image:post.image,
-                    like:post.like,
                     view:view}
             })
 

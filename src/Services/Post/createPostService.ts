@@ -21,8 +21,7 @@ class CreatePostService {
         content: content,
         authorId: authorId,
         image: image,
-        view:0,
-        like:0
+        
       }
 
     })
