@@ -8,45 +8,47 @@ class DetailPostService {
             }
         });
 
-        if(post){
-            const view = post.view+1;
+        if (post) {
+            const view = post.view + 1;
 
             const postUpdated = await prismaClient.post.update({
-                where: {id:id},data:{title:post.title,
-                    content:post.content,
-                    image:post.image,
-                    view:view}
+                where: { id: id }, data: {
+                    title: post.title,
+                    content: post.content,
+                    image: post.image,
+                    view: view
+                }
             })
 
 
             const user = await prismaClient.usuario.findFirst({
                 where: {
                     id: post.authorId
-                },select:{
-                    name:true,
-                    }
+                }, select: {
+                    name: true,
+                }
             })
 
-            const countLikes = await  prismaClient.likes.count({
-                where:{
-                    postId:post.id
+            const countLikes = await prismaClient.likes.count({
+                where: {
+                    postId: post.id
                 }
             })
 
             postUpdated.countlike = countLikes;
 
-            const countComents = await prismaClient.likes.count(
+            const countComents = await prismaClient.comments.count(
                 {
-                    where:{
-                        postId:post.id
+                    where: {
+                        postId: post.id
                     }
                 }
             )
             postUpdated.countcoment = countComents;
-console.log(countComents)
-            return {post:postUpdated,autor:user.name}
+            console.log(countComents)
+            return { post: postUpdated, autor: user.name }
         }
-  
+
     }
 }
 
